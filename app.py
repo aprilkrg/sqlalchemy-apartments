@@ -31,7 +31,7 @@ app.route('/db_test', methods=['GET'])(db_test)
 
 def make_owner():
     owner = models.Owner(
-        id=10,
+        id=11,
         name='Yuki',
         age=67
     )
@@ -52,10 +52,22 @@ def apt_test():
     )
     models.db.session.add(apt)
     models.db.session.commit()
-    apartments = models.Apartment.query.all()
-    print('APARTMENTS \n', apartments, '\n')
+    print('APARTMENT CREATE \n', apt, '\n')
     return 'ok'
 app.route('/apt_test', methods=['GET'])(apt_test)
+
+def make_apt():
+    apts_to_insert = [
+        models.Apartment(name='Zenith Hills',units=10,owner_id=5), 
+        models.Apartment(name='Willowspring',units=30,owner_id=6), 
+        models.Apartment(name='Hilltop',units=200,owner_id=10)
+    ]
+    models.db.session.bulk_save_objects(apts_to_insert)
+    models.db.session.commit()
+    apartments = models.Apartment.query.all()
+    print('ALL APARTMENTS \n', apartments, '\n')
+    return 'ok'
+app.route('/apt', methods=['GET'])(make_apt)
 
 
 if __name__ == '__main__':
