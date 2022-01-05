@@ -87,14 +87,29 @@ def make_apt():
     #     {"name": "Archstone"}
     # )
 
-    # attempt 5, 
-    apt = models.Apartment(
-        name='Archstone',
-        units=20, 
-        owner_id=5
-    )
-    models.db.session.add(apt)
+    #  attempt 5, worked!
+    # apt = models.Apartment(
+    #     name='Archstone',
+    #     units=20, 
+    #     owner_id=5
+    # )
+    # models.db.session.add(apt)
 
+    # attempt 6, bulk insert did not work
+    # apts = models.Apartment([
+    #     {'name':'Willowspring','units':30, 'owner_id':5},
+    #     {'name':'Zenith Height', 'units': 10, 'owner_id':6}
+    # ])
+    # models.db.session.add(apts)
+
+    # attempt 7, builtins.list is not mapped ??
+    # models.db.session.add([
+    #     {'name':'Willowspring','units':30, 'owner_id':5},
+    #     {'name':'Zenith Height', 'units': 10, 'owner_id':6}
+    # ])
+
+    apts_to_insert = [models.Apartment(name='Zenith Hills',units=10,owner_id=5), models.Apartment(name='Willowspring',units=30,owner_id=6), models.Apartment(name='Hilltop',units=200,owner_id=10)]
+    models.db.session.bulk_save_objects(apts_to_insert)
     models.db.session.commit()
     apartments = models.Apartment.query.all()
     print('ALL APARTMENTS \n', apartments, '\n')
