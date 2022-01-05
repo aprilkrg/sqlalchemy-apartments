@@ -1,4 +1,5 @@
 from flask import Flask
+from werkzeug.wrappers import request
 app = Flask(__name__)
 
 import os
@@ -33,10 +34,11 @@ def make_owner():
 # William - age 29
 # Jane - age 43
 # Yuki - Age 67
+
     owner = models.Owner(
-        id=9,
-        name='Jane',
-        age=43
+        id=10,
+        name='Yuki',
+        age=67
     )
     models.db.session.add(owner)
     models.db.session.commit()
@@ -45,6 +47,14 @@ def make_owner():
     print('OWNERsss \n', owners, '\n')
     return 'ok'
 app.route('/own_test', methods=['GET'])(make_owner)
+
+# def owner_params(id):
+#     print("REQUEST", request, "REQUEST")
+#     owners = models.Owner.query.all()
+#     print('OWNERsss \n', owners, '\n')
+#     return 'ok'
+# app.route(f'/own_test/{id}', methods=['GET'])(owner_params(1))
+# had been hoping to pass parameters like name and id through the request object, but that didn't pan out like I thought 
 
 def apt_test():
     apt = models.Apartment(
