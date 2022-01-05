@@ -11,6 +11,24 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 import models
 models.db.init_app(app)
 
+# PART TWO
+# Print all the data in the properties table.
+# Print just the names of all owners.
+# Print the names and ages of all owners who are older than 30.
+# Look up William, save him to a variable, and print it
+# Look up archstone, save it to a variable, and print it.
+# Change Jane's age to 30.
+# Change Jane's name to Janet.
+
+def all_owners():
+    owners = models.Owner.query.all()
+    print('\n OWNER TABLE DATA \n')
+    for i,owner in enumerate(owners):
+        print(f'{i+1}. {owner.name}, {owner.age}')
+    print('\n')
+    return 'ok'
+app.route('/owners', methods=['GET'])(all_owners)
+
 def home_test():
     dinos = models.Dino.query.all()
     print('DINOS \n', dinos, '\n')
@@ -38,9 +56,6 @@ def make_owner():
     models.db.session.add(owner)
     models.db.session.commit()
     print('OWNER \n', owner, '\n')
-    owners = models.Owner.query.all()
-    print('OWNERsss \n', owners, '\n')
-    return 'ok'
 app.route('/own_test', methods=['GET'])(make_owner)
 
 def apt_test():

@@ -21,7 +21,7 @@ class Apartment(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('owners.id'))
 
     def __str__(self):
-        return f'{self.name}'
+        return f'class Apartment: {self.name}'
 
 class Owner(db.Model):
     __tablename__ = 'owners'
@@ -31,4 +31,4 @@ class Owner(db.Model):
     apartments = db.relationship('Apartment') 
 
     def __str__(self):
-        return f'{self.name}, {self.age}'
+        return f'class Owner: {self.name}'
