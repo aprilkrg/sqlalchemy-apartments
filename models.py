@@ -26,3 +26,6 @@ class Owner(db.Model):
     name = db.Column(db.String, nullable=False)
     age = db.Column(db.Integer)
     apartments = db.relationship('Apartment') 
+
+    def __str__(self):
+        return f"{self.name}, {self.age}"

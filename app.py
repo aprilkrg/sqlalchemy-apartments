@@ -34,14 +34,15 @@ def make_owner():
 # Jane - age 43
 # Yuki - Age 67
     owner = models.Owner(
-        id=5,
-        name='William',
-        age=29
+        id=9,
+        name='Jane',
+        age=43
     )
     models.db.session.add(owner)
     models.db.session.commit()
+    print('OWNER \n', owner, '\n')
     owners = models.Owner.query.all()
-    print('OWNER \n', owners, '\n')
+    print('OWNERsss \n', owners, '\n')
     return 'ok'
 app.route('/own_test', methods=['GET'])(make_owner)
 
