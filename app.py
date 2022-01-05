@@ -30,11 +30,6 @@ def db_test():
 app.route('/db_test', methods=['GET'])(db_test)
 
 def make_owner():
-# Insert the following owners
-# William - age 29
-# Jane - age 43
-# Yuki - Age 67
-
     owner = models.Owner(
         id=10,
         name='Yuki',
@@ -47,14 +42,6 @@ def make_owner():
     print('OWNERsss \n', owners, '\n')
     return 'ok'
 app.route('/own_test', methods=['GET'])(make_owner)
-
-# def owner_params(id):
-#     print("REQUEST", request, "REQUEST")
-#     owners = models.Owner.query.all()
-#     print('OWNERsss \n', owners, '\n')
-#     return 'ok'
-# app.route(f'/own_test/{id}', methods=['GET'])(owner_params(1))
-# had been hoping to pass parameters like name and id through the request object, but that didn't pan out like I thought 
 
 def apt_test():
     apt = models.Apartment(
