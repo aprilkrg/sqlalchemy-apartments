@@ -12,7 +12,6 @@ import models
 models.db.init_app(app)
 
 # PART TWO
-# Print all the data in the properties table.
 # Print just the names of all owners.
 # Print the names and ages of all owners who are older than 30.
 # Look up William, save him to a variable, and print it
@@ -30,6 +29,15 @@ def all_owners():
     print('\n')
     return 'ok'
 app.route('/owners', methods=['GET'])(all_owners)
+
+def owner_name():
+    owners = models.Owner.query.all()
+    print('\n OWNER NAMES \n')
+    for i,owner in enumerate(owners):
+        print(f'{i+1}. {owner.name}')
+    print('\n')
+    return 'ok'
+app.route('/owners/names', methods=['GET'])(owner_name)
 
 def all_properties():
     apts = models.Apartment.query.all()
