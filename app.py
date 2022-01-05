@@ -30,13 +30,8 @@ def db_test():
 app.route('/db_test', methods=['GET'])(db_test)
 
 def make_owner():
-# Insert the following owners
-# William - age 29
-# Jane - age 43
-# Yuki - Age 67
-
     owner = models.Owner(
-        id=10,
+        id=11,
         name='Yuki',
         age=67
     )
@@ -48,14 +43,6 @@ def make_owner():
     return 'ok'
 app.route('/own_test', methods=['GET'])(make_owner)
 
-# def owner_params(id):
-#     print("REQUEST", request, "REQUEST")
-#     owners = models.Owner.query.all()
-#     print('OWNERsss \n', owners, '\n')
-#     return 'ok'
-# app.route(f'/own_test/{id}', methods=['GET'])(owner_params(1))
-# had been hoping to pass parameters like name and id through the request object, but that didn't pan out like I thought 
-
 def apt_test():
     apt = models.Apartment(
         id=2,
@@ -65,10 +52,54 @@ def apt_test():
     )
     models.db.session.add(apt)
     models.db.session.commit()
-    apartments = models.Apartment.query.all()
-    print('APARTMENTS \n', apartments, '\n')
+    print('APARTMENT CREATE \n', apt, '\n')
     return 'ok'
 app.route('/apt_test', methods=['GET'])(apt_test)
+
+def make_apt():
+    # Insert the following apartments
+    # Archstone - 20 units
+    # Zenith Hills - 10 units
+    # Willowspring - 30 units
+
+    # attempt 1, modeled off previous 
+    # apts = models.Apartment.insert().values([
+    #     {"name": "Archstone", "units": 20},
+    #     {"name": "Zenith Hills", "units": 10},
+    #     {"name": "Willowspring", "units": 30}
+    # ])
+    # models.db.session.add(apts)
+
+    # attempt 2, after 'Apartment' has no attribute 'insert' error tried to be more direct
+    # models.db.session.add([
+    #     {"name": "Archstone", "units": 20},
+    #     {"name": "Zenith Hills", "units": 10},
+    #     {"name": "Willowspring", "units": 30}
+    # ])
+
+    # attempt 3, got no attribute insert error
+    # apt = models.Apartment.insert().values(
+    #     {"name": "Archstone"}
+    # )
+
+    # attempt 4, no attribute values
+    # apt = models.Apartment.values(
+    #     {"name": "Archstone"}
+    # )
+
+    # attempt 5, 
+    apt = models.Apartment(
+        name='Archstone',
+        units=20, 
+        owner_id=5
+    )
+    models.db.session.add(apt)
+
+    models.db.session.commit()
+    apartments = models.Apartment.query.all()
+    print('ALL APARTMENTS \n', apartments, '\n')
+    return 'ok'
+app.route('/apt', methods=['GET'])(make_apt)
 
 
 if __name__ == '__main__':
