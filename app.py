@@ -31,6 +31,15 @@ def all_owners():
     return 'ok'
 app.route('/owners', methods=['GET'])(all_owners)
 
+def all_properties():
+    apts = models.Apartment.query.all()
+    print('\n APARTMENT TABLE DATA \n')
+    for i,apt in enumerate(apts):
+        print(f'{i+1}. name: {apt.name}, units: {apt.units}, owner id: {apt.owner_id}')
+    print('\n')
+    return 'ok'
+app.route('/apartments', methods=['GET'])(all_properties)
+
 def home_test():
     dinos = models.Dino.query.all()
     print('DINOS \n', dinos, '\n')
