@@ -25,6 +25,8 @@ def all_owners():
     print('\n OWNER TABLE DATA \n')
     for i,owner in enumerate(owners):
         print(f'{i+1}. {owner.name}, {owner.age}')
+        for i,apartment in enumerate(owner.apartments):
+            print(f'apartment: {apartment.name}, units: {apartment.units}')
     print('\n')
     return 'ok'
 app.route('/owners', methods=['GET'])(all_owners)
