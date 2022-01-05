@@ -29,10 +29,14 @@ def db_test():
 app.route('/db_test', methods=['GET'])(db_test)
 
 def make_owner():
+# Insert the following owners
+# William - age 29
+# Jane - age 43
+# Yuki - Age 67
     owner = models.Owner(
         id=5,
-        name='Landlord',
-        age=100
+        name='William',
+        age=29
     )
     models.db.session.add(owner)
     models.db.session.commit()
