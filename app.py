@@ -11,10 +11,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 import models
 models.db.init_app(app)
 
-# PART TWO
-# Change Jane's age to 30.
-# Change Jane's name to Janet.
-
 ### PART TWO ROUTES ###
 
 def all_owners():
@@ -25,6 +21,7 @@ def all_owners():
         for i,apartment in enumerate(owner.apartments):
             print(f'apartment: {apartment.name}, units: {apartment.units}')
     print('\n')
+
     return 'ok'
 app.route('/owners', methods=['GET'])(all_owners)
 
@@ -34,6 +31,7 @@ def owner_name():
     for i,owner in enumerate(owners):
         print(f'{i+1}. {owner.name}')
     print('\n')
+
     return 'ok'
 app.route('/owners/names', methods=['GET'])(owner_name)
 
@@ -43,6 +41,7 @@ def owner_age():
     for i,owner in enumerate(owners):
         print(f'{i+1}. {owner.age}')
     print('\n')
+
     return 'ok'
 app.route('/owners/ages', methods=['GET'])(owner_age)
 
@@ -52,6 +51,7 @@ def all_properties():
     for i,apt in enumerate(apts):
         print(f'{i+1}. name: {apt.name}, units: {apt.units}, owner id: {apt.owner_id}')
     print('\n')
+
     return 'ok'
 app.route('/apartments', methods=['GET'])(all_properties)
 
@@ -60,12 +60,34 @@ def find_one():
     print('\n OWNER NAME \n')
     print(f'{owner.name}')
     print('\n')
+
     apt = models.db.session.query(models.Apartment).filter_by(name='Archstone').first()
     print('\n APARTMENT NAME \n')
     print(f'{apt.name}')
     print('\n')
+
     return 'ok'
 app.route('/owners/5', methods=['GET'])(find_one)
+
+def change_one():
+    owner = models.db.session.query(models.Owner).filter_by(name='Jane').first()
+
+    owner.age = 30
+    models.db.session.add(owner)
+    models.db.session.commit()
+    print('\n UPDATED AGE \n')
+    print(f'{owner.name} is now {owner.age}')
+    print('\n')
+
+    owner.name = 'Janet'
+    models.db.session.add(owner)
+    models.db.session.commit()
+    print('\n UPDATED NAME \n')
+    print(f'Jane is now {owner.name}')
+    print('\n')
+
+    return 'ok'
+app.route('/owners/6', methods=['GET'])(change_one)
 
 ### PART ONE ROUTES ###
 
@@ -73,6 +95,7 @@ def home_test():
     dinos = models.Dino.query.all()
     print('DINOS \n', dinos, '\n')
     print('FIRST DINO \n', models.db.session.query(models.Dino).first(), '\n')
+
     return 'ok'
 app.route('/', methods=['GET'])(home_test)
 
@@ -84,6 +107,7 @@ def db_test():
     )
     models.db.session.add(dino)
     models.db.session.commit()
+
     return 'ok'
 app.route('/db_test', methods=['GET'])(db_test)
 
@@ -96,6 +120,8 @@ def make_owner():
     models.db.session.add(owner)
     models.db.session.commit()
     print('OWNER \n', owner, '\n')
+
+    return 'ok'
 app.route('/own_test', methods=['GET'])(make_owner)
 
 def apt_test():
@@ -108,6 +134,7 @@ def apt_test():
     models.db.session.add(apt)
     models.db.session.commit()
     print('APARTMENT CREATE \n', apt, '\n')
+
     return 'ok'
 app.route('/apt_test', methods=['GET'])(apt_test)
 
@@ -121,6 +148,7 @@ def make_apt():
     models.db.session.commit()
     apartments = models.Apartment.query.all()
     print('ALL APARTMENTS \n', apartments, '\n')
+    
     return 'ok'
 app.route('/apt', methods=['GET'])(make_apt)
 
