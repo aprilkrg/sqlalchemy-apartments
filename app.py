@@ -11,6 +11,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 import models
 models.db.init_app(app)
 
+
+### PART THREE ROUTES ###
+# Associate each property with an owner:
+# Archstone - belongs to Yuki
+# Zenith Hills - belongs to Yuki
+# Willowspring - belongs to Jane
+# Print all the properties that are owned by Yuki.
+# Print the count (length) of how many properties Yuki owns.
+# Find Willowspring's owner and print their name.
+# Change Willowspring so that is now owned by Yuki.
+# Print the names of the people who own properties that have 20 units or more
+
+
+
 ### PART TWO ROUTES ###
 
 def all_owners():
