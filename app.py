@@ -12,11 +12,10 @@ import models
 models.db.init_app(app)
 
 # PART TWO
-# Print the names and ages of all owners who are older than 30.
-# Look up William, save him to a variable, and print it
-# Look up archstone, save it to a variable, and print it.
 # Change Jane's age to 30.
 # Change Jane's name to Janet.
+
+### PART TWO ROUTES ###
 
 def all_owners():
     owners = models.Owner.query.all()
@@ -55,6 +54,20 @@ def all_properties():
     print('\n')
     return 'ok'
 app.route('/apartments', methods=['GET'])(all_properties)
+
+def find_one():
+    owner = models.db.session.query(models.Owner).filter_by(name='William').first()
+    print('\n OWNER NAME \n')
+    print(f'{owner.name}')
+    print('\n')
+    apt = models.db.session.query(models.Apartment).filter_by(name='Archstone').first()
+    print('\n APARTMENT NAME \n')
+    print(f'{apt.name}')
+    print('\n')
+    return 'ok'
+app.route('/owners/5', methods=['GET'])(find_one)
+
+### PART ONE ROUTES ###
 
 def home_test():
     dinos = models.Dino.query.all()
