@@ -23,6 +23,17 @@ models.db.init_app(app)
 # Change Willowspring so that is now owned by Yuki.
 # Print the names of the people who own properties that have 20 units or more
 
+def add_assoc():
+    apt_to_assoc = models.Apartment.query.filter_by(name='Aspen').first()
+    print('\n', apt_to_assoc, '\n')
+    owner_to_assoc = models.Owner.query.filter_by(id=2).first()
+    owner_to_assoc.apartments.append(apt_to_assoc)
+    apt_to_assoc.owner_id = owner_to_assoc.id
+    models.db.session.add(apt_to_assoc)
+    models.db.session.commit()
+    print('\n', owner_to_assoc, owner_to_assoc.apartments, '\n')
+    return 'ok'
+app.route('/add', methods=['GET'])(add_assoc)
 
 
 ### PART TWO ROUTES ###
@@ -154,9 +165,9 @@ app.route('/apt_test', methods=['GET'])(apt_test)
 
 def make_apt():
     apts_to_insert = [
-        models.Apartment(name='Zenith Hills',units=10,owner_id=5), 
-        models.Apartment(name='Willowspring',units=30,owner_id=6), 
-        models.Apartment(name='Hilltop',units=200,owner_id=10)
+        models.Apartment(name='McDonald',units=100), 
+        models.Apartment(name='Cowden',units=300), 
+        models.Apartment(name='Aspen',units=200)
     ]
     models.db.session.bulk_save_objects(apts_to_insert)
     models.db.session.commit()
