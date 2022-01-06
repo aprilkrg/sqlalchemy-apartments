@@ -13,10 +13,6 @@ models.db.init_app(app)
 
 
 ### PART THREE ROUTES ###
-# Associate each property with an owner:
-# Willowspring - belongs to Jane
-# Print all the properties that are owned by Yuki.
-# Print the count (length) of how many properties Yuki owns.
 # Find Willowspring's owner and print their name.
 # Change Willowspring so that is now owned by Yuki.
 # Print the names of the people who own properties that have 20 units or more
@@ -33,6 +29,13 @@ def add_assoc():
     return 'ok'
 app.route('/add', methods=['GET'])(add_assoc)
 
+def print_assoc():
+    owner = models.Owner.query.filter_by(name='Yuki').first()
+    print('\n', f'{owner.name} owns {len(owner.apartments)} apartments')
+    for i,apartment in enumerate(owner.apartments):
+        print(f'{i+1}. {apartment.name}')
+    return 'ok'
+app.route('/owners/apartments', methods=['GET'])(print_assoc)
 
 ### PART TWO ROUTES ###
 
