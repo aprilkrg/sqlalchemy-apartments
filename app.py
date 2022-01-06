@@ -14,8 +14,6 @@ models.db.init_app(app)
 
 ### PART THREE ROUTES ###
 # Associate each property with an owner:
-# Archstone - belongs to Yuki
-# Zenith Hills - belongs to Yuki
 # Willowspring - belongs to Jane
 # Print all the properties that are owned by Yuki.
 # Print the count (length) of how many properties Yuki owns.
@@ -24,9 +22,9 @@ models.db.init_app(app)
 # Print the names of the people who own properties that have 20 units or more
 
 def add_assoc():
-    apt_to_assoc = models.Apartment.query.filter_by(name='Archstone').first()
+    apt_to_assoc = models.Apartment.query.filter_by(name='Willowspring').first()
     print('\n', apt_to_assoc, '\n')
-    owner_to_assoc = models.Owner.query.filter_by(name='Yuki').first()
+    owner_to_assoc = models.Owner.query.filter_by(id=8).first()
     owner_to_assoc.apartments.append(apt_to_assoc)
     apt_to_assoc.owner_id = owner_to_assoc.id
     models.db.session.add(apt_to_assoc)
