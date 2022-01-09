@@ -13,7 +13,6 @@ models.db.init_app(app)
 
 
 ### PART THREE ROUTES ###
-# Find Willowspring's owner and print their name.
 # Change Willowspring so that is now owned by Yuki.
 # Print the names of the people who own properties that have 20 units or more
 
@@ -36,6 +35,14 @@ def print_assoc():
         print(f'{i+1}. {apartment.name}')
     return 'ok'
 app.route('/owners/apartments', methods=['GET'])(print_assoc)
+
+def find_assoc():
+    apt = models.Apartment.query.filter_by(name='Willowspring').first()
+    apt_owner = models.Owner.query.filter_by(id=apt.owner_id).first()
+    print(f'The owner of {apt.name} Apartments is {apt_owner.name}')
+    return 'ok'
+app.route('/apartments/owners', methods=['GET'])(find_assoc)
+
 
 ### PART TWO ROUTES ###
 
